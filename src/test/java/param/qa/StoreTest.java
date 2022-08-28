@@ -41,7 +41,7 @@ public class StoreTest {
 
     static Stream<Arguments> searchCatalogs() {
         return Stream.of(
-                Arguments.of("rus", List.of("О компании", "Рекламодателю", "Контакты")),
+                Arguments.of("рус", List.of("О компании", "Рекламодателю", "Контакты")),
                 Arguments.of("eng", List.of("About us", "To advertisers", "Contacts")));
 
     }
@@ -50,7 +50,7 @@ public class StoreTest {
     void searchCatalogs(String lang, List<String>expectedItems){
         open("https://zagranitsa.com");
         $$(" div.lang>ul>li>a").find(text(lang)).click();
-        $$("#about > div > div > ul > li").shouldHave(CollectionCondition.texts(expectedItems));
+        $$(".scrolling>ul>li").shouldHave(CollectionCondition.texts(expectedItems));
 
     }
 
