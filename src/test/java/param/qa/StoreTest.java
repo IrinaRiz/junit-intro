@@ -1,8 +1,6 @@
 package param.qa;
-
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
-import guru.qa.Lang;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,7 +20,7 @@ public class StoreTest {
     void searchBooks(String testdata){
         open("https://www.mybook.ru");
         $(".ant-input").setValue(testdata);
-        $$(".e4xwgl-5").shouldBe(CollectionCondition.sizeGreaterThan(0));
+        $$(".e4xwgl-1").shouldBe(CollectionCondition.sizeGreaterThan(0));
     }
 
     @CsvSource(value = {
@@ -34,7 +32,7 @@ public class StoreTest {
     void searchMostPopularBooks(String testdata, String expectedResult){
         open("https://www.mybook.ru");
         $(".ant-input").setValue(testdata);
-        $$(".e4xwgl-5")
+        $$(".e4xwgl-1")
                 .first()
                 .shouldHave(Condition.partialText(expectedResult));
     }
@@ -45,7 +43,7 @@ public class StoreTest {
                 Arguments.of("eng", List.of("About us", "To advertisers", "Contacts")));
 
     }
-    @MethodSource()
+    @MethodSource("searchCatalogs")
     @ParameterizedTest(name = "Result for query {0} displays correct items {1}")
     void searchCatalogs(String lang, List<String>expectedItems){
         open("https://zagranitsa.com");
@@ -53,5 +51,4 @@ public class StoreTest {
         $$(".scrolling>ul>li").shouldHave(CollectionCondition.texts(expectedItems));
 
     }
-
 }
